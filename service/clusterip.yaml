@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: svc-clusterip
+spec:
+  type: ClusterIP #默认类型
+  selector:
+    app: myapp
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
