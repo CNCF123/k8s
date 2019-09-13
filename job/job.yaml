@@ -3,8 +3,10 @@ kind: Job
 metadata:
   name: pi
 spec:
-  parallelism: 2
-  completions: 4
+  parallelism: 2 #完成数
+  completions: 4 #并行数
+  backoffLimit: 4 #失败重启次数
+  activeDeadlineSeconds: 600 #最大执行时间，超出就终止
   template:
     spec:
       containers:
@@ -13,6 +15,5 @@ spec:
         imagePullPolicy: IfNotPresent
         command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
       restartPolicy: OnFailure
-  backoffLimit: 4
-  activeDeadlineSeconds: 600
+
 
