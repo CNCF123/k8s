@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: busybox-httpd-config
+  namespace: default
+data:
+  httpd_port: "8080"
+  verbose_level: "-vv"

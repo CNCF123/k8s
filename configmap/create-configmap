@@ -1,0 +1,9 @@
+1.利用直接值创建
+kubectl create configmap configmap_name --from-literal=key-name=value
+
+2.基于文件创建
+kubectl create configmap configmap_name --from-file=file_name
+
+3.基于目录创建
+kubectl create configmap configmap_name --from-file=dir_name
+kubectl create configmap nginx-config --from-file=/data/configs/nginx/conf.d/
