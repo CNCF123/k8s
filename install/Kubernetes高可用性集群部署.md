@@ -294,7 +294,7 @@ kube-proxy使用ipvs模式，所以需要加ipvs相关的内核模块及安装ip
     You can now join any number of machines by running the following on each node
     as root:
 
-    kubeadm join apiserver.hipstershop.com:6443 --token skvqhu.b297uimw0omi26w0 --discovery-token-ca-cert-hash sha256:b3b23ae7aea87baa02eda31f7fdbd2604e4cfa20a9f9c278671816d630f30d22
+    kubeadm join apiserver.chenkaidi.com:6443 --token skvqhu.b297uimw0omi26w0 --discovery-token-ca-cert-hash sha256:b3b23ae7aea87baa02eda31f7fdbd2604e4cfa20a9f9c278671816d630f30d22
 
 > 注意：以上(kubeadm join)输出在其他节点加入时会使用，需要妥善保管
 
