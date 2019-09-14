@@ -16,3 +16,7 @@ spec:
       - backend:
           serviceName: svc_name
           servicePort: svc_port
+      - path: /api
+        backend:
+          serviceName: svc_name
+          servicePort: svc_port
