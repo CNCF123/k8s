@@ -1,0 +1,23 @@
+  apiVersion: v1
+kind: Pod
+metadata:
+  name: pv-pod
+spec:
+  containers:
+    - name: pv-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - name: data
+          mountPath: "/usr/share/nginx/html"
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: rook-ceph-block
+      resources:
+        requests:
+          storage: 2Gi
