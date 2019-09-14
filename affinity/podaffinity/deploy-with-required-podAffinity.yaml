@@ -22,4 +22,4 @@ spec:
             topologyKey: zone
       containers:
       - name: myapp
-        image: ikubernetes/myapp:v1
+        image: chenkaidi/myapp:v1
