@@ -9,7 +9,7 @@ metadata:
   annotations:
 spec:
   rules:
-    - host: tracing.hipstershop.cn
+    - host: tracing.chenkaidi.com
       http:
         paths:
           - path: /
