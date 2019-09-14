@@ -166,7 +166,7 @@ kube-proxy使用ipvs模式，所以需要加ipvs相关的内核模块及安装ip
 
 ## 安装 Docker
 
-所有节点安装 Docker，推荐安装 1.13.1, 17.03, 17.06, 17.09, 18.06, 18.09，但是18.09+是未经测试的，不推荐使用。
+所有节点安装 Docker，推荐安装 17.03, 17.06, 17.09, 18.06, 18.09，但是18.09+是未经测试的，不推荐使用。
 
 ### 安装依赖包
 
@@ -190,11 +190,10 @@ kube-proxy使用ipvs模式，所以需要加ipvs相关的内核模块及安装ip
     $ cat << EOF > /etc/docker/daemon.json
     {
     "insecure-registry": [
-        "hub.hipstershop.cn",
-        "reg.hipstershop.cn"
+        "hub.chenkaidi.com",
+        "registry.chenkaidi.com"
     ],
     "registry-mirror": "https://q00c7e05.mirror.aliyuncs.com",
-    "graph": "/data1/docker",
     "exec-opts": ["native.cgroupdriver=systemd"],
     "log-driver": "json-file",
     "log-opts": {
@@ -251,7 +250,7 @@ kube-proxy使用ipvs模式，所以需要加ipvs相关的内核模块及安装ip
     kubernetesVersion: v1.14.1
     apiServer:
         certSANs:
-        - "apiserver.hipstershop.cn"
+        - "apiserver.chenkaidi.com"
         - "172.16.1.50"
         - "172.16.10.48"
         - "172.16.10.49"
@@ -259,10 +258,7 @@ kube-proxy使用ipvs模式，所以需要加ipvs相关的内核模块及安装ip
         extraArgs:
             allow-privileged: "true"
             feature-gates: "VolumeSnapshotDataSource=true,CSINodeInfo=true,CSIDriverRegistry=true"
-    controlPlaneEndpoint: "apiserver.hipstershop.cn:6443"
-    etcd:
-        local:
-            dataDir: /data1/etcd
+    controlPlaneEndpoint: "apiserver.chenkaidi.com:6443"
     networking:
         # This CIDR is a Canal default. Substitute or remove for your CNI provider.
         podSubnet: "10.244.0.0/16"
@@ -274,7 +270,7 @@ kube-proxy使用ipvs模式，所以需要加ipvs相关的内核模块及安装ip
             address: 0.0.0.0
     imageRepository: gcr.azk8s.cn/google-containers
 
-> 172.16.1.50 为APIServer的负载均衡IP，6443为负载均衡的端口。如果没有负载均可以通过 HaProxy自行搭建，参见[HaProxy负载均衡配置](https://github.com/findsec-cn/k200/raw/master/1.高可用性集群部署/kHaProxy负载均衡配置.md)。如果公司有硬件负载均衡如f5、Netscaler等可以直接使用；如果在各云平台可以使用各云平台的负载均衡（如阿里云的SLB）。
+> 172.16.1.50 为APIServer的负载均衡IP，6443为负载均衡的端口。如果没有负载均可以通过 HaProxy自行搭建，参见[HaProxy负载均衡配置](https://github.com/ilovek8s/k8s/blob/master/install/配置HaProxy负载均衡配置.md)。如果公司有硬件负载均衡如f5、Netscaler等可以直接使用；如果在各云平台可以使用各云平台的负载均衡（如阿里云的SLB）。
 > 如果你不能直接访问gcr.io，需要设置imageRepository: gcr.azk8s.cn/google-containers。
 
 ### 初始化第一个节点
@@ -311,10 +307,12 @@ kube-proxy使用ipvs模式，所以需要加ipvs相关的内核模块及安装ip
 
 ### 安装网络组件
 
-在此选择Canal网络组件，其他网络组建见：https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
+在此选择calica或Canal网络组件，其他网络组建见：https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
 
-    $ kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/canal/rbac.yaml
-    $ kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/canal/canal.yaml
+    calico:
+    https://docs.projectcalico.org/v3.9/getting-started/kubernetes/installation/calico
+    canal:
+    https://docs.projectcalico.org/v3.9/getting-started/kubernetes/installation/flannel
 
 等待第一个节点 pod 都变为运行状态
 
@@ -364,9 +362,9 @@ kube-proxy使用ipvs模式，所以需要加ipvs相关的内核模块及安装ip
 > 注意：加入集群的命令请使用第一个节点安装完成后生生成的命令。
 
     # 在第二个控制节点执行
-    $ kubeadm join apiserver.hipstershop.cn:6443 --token skvqhu.b297uimw0omi26w0 --discovery-token-ca-cert-hash sha256:b3b23ae7aea87baa02eda31f7fdbd2604e4cfa20a9f9c278671816d630f30d22 --experimental-control-plane
+    $ kubeadm join apiserver.chenkaidi.com:6443 --token skvqhu.b297uimw0omi26w0 --discovery-token-ca-cert-hash sha256:b3b23ae7aea87baa02eda31f7fdbd2604e4cfa20a9f9c278671816d630f30d22 --experimental-control-plane
     # 在第三个控制节点执行
-    $ kubeadm join apiserver.hipstershop.cn:6443 --token skvqhu.b297uimw0omi26w0 --discovery-token-ca-cert-hash sha256:b3b23ae7aea87baa02eda31f7fdbd2604e4cfa20a9f9c278671816d630f30d22 --experimental-control-plane
+    $ kubeadm join apiserver.chenkaidi.com:6443 --token skvqhu.b297uimw0omi26w0 --discovery-token-ca-cert-hash sha256:b3b23ae7aea87baa02eda31f7fdbd2604e4cfa20a9f9c278671816d630f30d22 --experimental-control-plane
 
 ## 配置从节点
 
@@ -375,4 +373,4 @@ kube-proxy使用ipvs模式，所以需要加ipvs相关的内核模块及安装ip
 > 注意：加入集群的命令请使用第一个节点安装完成后生生成的命令。
 
     # 在s1,s2,s3节点执行
-    $ kubeadm join apiserver.hipstershop.cn:6443 --token skvqhu.b297uimw0omi26w0 --discovery-token-ca-cert-hash sha256:b3b23ae7aea87baa02eda31f7fdbd2604e4cfa20a9f9c278671816d630f30d22
+    $ kubeadm join apiserver.chenkaidi.com:6443 --token skvqhu.b297uimw0omi26w0 --discovery-token-ca-cert-hash sha256:b3b23ae7aea87baa02eda31f7fdbd2604e4cfa20a9f9c278671816d630f30d22
