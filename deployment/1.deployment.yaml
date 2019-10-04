@@ -14,10 +14,81 @@ spec:
       labels:
         app: nginx
     spec:
+      hostNetwork: true
+      tolerations:
+      - key: "role"
+        operator: "Equal"
+        value: "job"
+        effect: "NoSchedule"
+      nodeSelector:
+        role: web
+      initContainers:
+      - name: 
       containers:
       - name: nginx
         image: nginx:1.16
+        imagePullPolicy: [ Always | IfNotPresent | Never ]
         ports:
         - name: http
           containerPort: 80
-
+        volumeMounts:
+        - name: data
+          mountPath: "/usr/share/nginx/html"
+        env:
+        - name: string
+          value: string
+        resources:
+          requests:
+            cpu: 100m
+            memory: 0.1Gi
+          limits:
+            cpu: 500m
+            memory: 0.5Gi
+        livenessProbe:
+          exec:
+            command:
+            - cat
+            - /tmp/healthy
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 5
+          successThreshold: 1
+          failureThreshold: 2
+        lifecycle:
+          postStart:
+            exec:
+              command: ["/bin/sh", "-c", "echo Hello from the postStart handler > /usr/share/message"]
+          preStop:
+            exec:
+              command: ["/usr/sbin/nginx","-s","quit"]
+        restartPolicy: [Always | Never | OnFailure]
+        volumes:
+        - name: string
+          emptyDir: {}
+          hostPath:
+            path: string
+          secret:
+            secretName: string
+            items:
+            - keys: string
+              path: string
+          configMap:
+            name: string
+            items:
+            - key: string
+              path: string
+        volumeClaimTemplates:
+        - metadata:
+            name: data
+          spec:
+            accessModes: ["ReadWriteOnce"]
+            storageClassName: rook-ceph-block
+            resources:
+              requests:
+                storage: 2Gi
