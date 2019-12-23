@@ -15,5 +15,5 @@ spec:
     image: chenkaidi/myapp:v1
     resources:
       requests:
-        cpu: 6
-        memory: 20Gi
+        cpu: 1
+        memory: 2Gi
