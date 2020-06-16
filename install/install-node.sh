@@ -50,7 +50,6 @@ yum install -y docker-ce-18.06.3.ce docker-ce-cli containerd.io
 
 #创建docker配置文件
 mkdir -p /etc/docker
-
 cat > /etc/docker/daemon.json <<EOF 
 {
 "insecure-registry": [
@@ -60,6 +59,9 @@ cat > /etc/docker/daemon.json <<EOF
 "graph": "/data/docker"
 }
 EOF
+
+#创建docker目录
+mkdir -p /data/docker
 
 #启动docker
 systemctl daemon-reload
