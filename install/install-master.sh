@@ -49,8 +49,7 @@ yum install -y yum-utils device-mapper-persistent-data lvm2
 # yum list docker-ce.x86_64 --showduplicates | sort -r
 #安装docker
 yum install -y docker-ce-18.06.3.ce docker-ce-cli containerd.io
-#启动docker
-systemctl start docker
+
 #创建docker配置文件
 mkdir -p /etc/docker
 cat > /etc/docker/daemon.json <<EOF 
@@ -66,9 +65,10 @@ EOF
 #创建docker目录
 mkdir -p /data/docker
 
+#启动docker
 systemctl daemon-reload
 systemctl enable docker
-systemctl restart docker
+systemctl start docker
 
 docker --version
 
