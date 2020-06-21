@@ -90,6 +90,7 @@ EOF
 yum install -y kubelet kubeadm
 
 #设置kubelet忽略关闭swap
+mkdir /etc/kubeconfig
 cat > /etc/kubeconfig/kubelet <<EOF
 KUBELET_EXTRA_ARGS="--fail-swap-on=false"
 EOF
