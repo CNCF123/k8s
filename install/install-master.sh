@@ -1,5 +1,5 @@
 #!/bin/bash
-# k8s-v1.14.3 安装master节点
+# k8s-v1.18.3 安装master节点
 
 #关闭SELinux
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
@@ -88,40 +88,18 @@ EOF
 #查看可以安装的版本
 ### yum list kubelet kubeadm --showduplicates|sort -r
 
-#安装指定的软件包 kubelet-1.14.3 kubeadm-1.14.3 kubectl-1.14.3
-yum install -y kubelet kubectl kubeadm
+#安装指定的软件包 kubelet-1.18.3 kubeadm-1.18.3 kubectl-1.18.3
+yum install -y kubelet-1.18.3 kubectl-1.18.3 kubeadm-1.18.3
 #设置开机自动启动kubelet
 systemctl enable kubelet.service
 
 #创建kubeadm配置文件kubeadm-config.yaml
 
-cat > /root/kubeadm-config.yaml <<EOF
-apiServer:
-  extraArgs:
-    authorization-mode: Node,RBAC
-  timeoutForControlPlane: 4m0s
-apiVersion: kubeadm.k8s.io/v1beta1
-certificatesDir: /etc/kubernetes/pki
-clusterName: kubernetes
-controlPlaneEndpoint: 192.168.0.200:6443
-controllerManager: {}
-dns:
-  type: CoreDNS
-imageRepository: devops-hub.tutorabc.com.cn/library
-kind: ClusterConfiguration
-kubernetesVersion: v1.14.3
-networking:
-  dnsDomain: cluster.local
-  podSubnet: 10.244.0.0/16
-  serviceSubnet: 10.96.0.0/12
-scheduler: {}
-EOF
-
 #初始化master节点
-kubeadm init --config=/root/kubeadm-config.yaml
+#kubeadm init --config=/root/kubeadm-config.yaml
 
 
 #kubectl客户端配置
-mkdir -p $HOME/.kube
-cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-chown $(id -u):$(id -g) $HOME/.kube/config
+#mkdir -p $HOME/.kube
+#cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+#chown $(id -u):$(id -g) $HOME/.kube/config
