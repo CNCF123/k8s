@@ -88,6 +88,12 @@ EOF
 
 #安装指定的软件包 kubelet-1.18.3 kubeadm-1.18.3
 yum install -y kubelet-1.18.3 kubeadm-1.18.3
+
+#设置kubelet忽略关闭swap
+cat > /etc/kubeconfig/kubelet <<EOF
+KUBELET_EXTRA_ARGS="--fail-swap-on=false"
+EOF
+
 #设置开机自动启动kubelet
 systemctl enable kubelet.service
 
