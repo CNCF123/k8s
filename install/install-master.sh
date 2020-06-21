@@ -58,7 +58,8 @@ cat > /etc/docker/daemon.json <<EOF
     "devops-hub.tutorabc.com.cn"
 ],
 "registry-mirror": "https://5cs233bb.mirror.aliyuncs.com",
-"graph": "/data/docker"
+"graph": "/data/docker",
+"exec-opts": ["native.cgroupdriver=systemd"]
 }
 EOF
 
