@@ -48,7 +48,7 @@ yum install -y yum-utils device-mapper-persistent-data lvm2
 # 安装指定版本的Docker-CE:
 # yum list docker-ce.x86_64 --showduplicates | sort -r
 #安装docker
-yum install -y docker-ce-18.06.3.ce docker-ce-cli containerd.io
+yum install -y docker-ce docker-ce-cli containerd.io
 
 #创建docker配置文件
 mkdir -p /etc/docker
@@ -89,7 +89,7 @@ EOF
 ### yum list kubelet kubeadm --showduplicates|sort -r
 
 #安装指定的软件包 kubelet-1.14.3 kubeadm-1.14.3 kubectl-1.14.3
-yum install -y kubelet-1.14.3 kubectl-1.14.3 kubeadm-1.14.3 --disableexcludes=kubernetes
+yum install -y kubelet kubectl kubeadm
 #设置开机自动启动kubelet
 systemctl enable kubelet.service
 
@@ -103,19 +103,10 @@ apiServer:
 apiVersion: kubeadm.k8s.io/v1beta1
 certificatesDir: /etc/kubernetes/pki
 clusterName: kubernetes
-controlPlaneEndpoint: slb-devops-k8sapi-p01.devops.vipabc.com:6443
+controlPlaneEndpoint: 192.168.0.200:6443
 controllerManager: {}
 dns:
   type: CoreDNS
-etcd:
-  external:
-    caFile: /data/ssl/ca.pem
-    certFile: /data/ssl/kubernetes.pem
-    endpoints:
-    - https://10.88.6.159:2379
-    - https://10.88.10.79:2379
-    - https://10.88.10.80:2379
-    keyFile: /data/ssl/kubernetes-key.pem
 imageRepository: devops-hub.tutorabc.com.cn/library
 kind: ClusterConfiguration
 kubernetesVersion: v1.14.3
