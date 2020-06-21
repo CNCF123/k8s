@@ -1,5 +1,5 @@
 #!/bin/bash
-# k8s-v1.14.3 安装node节点
+# k8s-v1.18.3 安装node节点
 
 #关闭SELinux
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
@@ -46,7 +46,7 @@ yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/
 #安装依赖包
 yum install -y yum-utils device-mapper-persistent-data lvm2
 #安装docker
-yum install -y docker-ce-18.06.3.ce docker-ce-cli containerd.io
+yum install -y docker-ce docker-ce-cli containerd.io
 
 #创建docker配置文件
 mkdir -p /etc/docker
@@ -86,10 +86,10 @@ EOF
 #查看可以安装的版本
 ### yum list kubelet kubeadm --showduplicates|sort -r
 
-#安装指定的软件包 kubelet-1.14.3 kubeadm-1.14.3
-yum install -y kubelet-1.14.3 kubeadm-1.14.3 --disableexcludes=kubernetes
+#安装指定的软件包 kubelet-1.18.3 kubeadm-1.18.3
+yum install -y kubelet-1.18.3 kubeadm-1.18.3
 #设置开机自动启动kubelet
 systemctl enable kubelet.service
 
 #配置从节点
-kubeadm join slb-devops-k8sapi-p01.devops.vipabc.com:6443 --token tq6h4u.an7lj8cbao0g9u6r --discovery-token-ca-cert-hash sha256:6bac5edc327da9d5233d09c5279c73351c3a98fb8e92e24b3767dfffc89a5fa0
+#kubeadm join slb-devops-k8sapi-p01.devops.vipabc.com:6443 --token tq6h4u.an7lj8cbao0g9u6r --discovery-token-ca-cert-hash sha256:6bac5edc327da9d5233d09c5279c73351c3a98fb8e92e24b3767dfffc89a5fa0
