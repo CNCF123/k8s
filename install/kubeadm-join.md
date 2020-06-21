@@ -4,6 +4,7 @@
 wxvdun.vec7m9cu4ru3hngg
 
 [root@k8s-master ~]# kubeadm token list
+
 TOKEN                     TTL       EXPIRES                     USAGES                   DESCRIPTION   EXTRA GROUPS
 
 wxvdun.vec7m9cu4ru3hngg   23h       2019-10-18T10:43:34+08:00   authentication,signing   <none>
