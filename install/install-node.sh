@@ -41,10 +41,10 @@ yum install -y ipset ipvsadm
 
 
 #安装Docker
-#添加yum仓库
-yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 #安装依赖包
 yum install -y yum-utils device-mapper-persistent-data lvm2
+#添加yum仓库
+yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 #安装docker
 yum install -y docker-ce docker-ce-cli containerd.io
 
@@ -87,7 +87,7 @@ EOF
 ### yum list kubelet kubeadm --showduplicates|sort -r
 
 #安装指定的软件包 kubelet-1.18.3 kubeadm-1.18.3
-yum install -y kubelet-1.18.3 kubeadm-1.18.3
+yum install -y kubelet kubeadm
 
 #设置kubelet忽略关闭swap
 cat > /etc/kubeconfig/kubelet <<EOF
