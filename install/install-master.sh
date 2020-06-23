@@ -1,5 +1,8 @@
 #!/bin/bash
-# k8s-v1.18.3 安装master节点
+#安装master节点
+
+DOCKER-VERSION="19.03.9"
+K8S-VERSION="v1.14.3"
 
 #关闭SELinux
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
@@ -48,7 +51,7 @@ yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/
 # 安装指定版本的Docker-CE:
 # yum list docker-ce.x86_64 --showduplicates | sort -r
 #安装docker
-yum install -y docker-ce docker-ce-cli containerd.io
+yum install -y docker-ce-${DOCKER-VERSION} docker-ce-cli-${DOCKER-VERSION} containerd.io
 
 #创建docker配置文件
 mkdir -p /etc/docker
@@ -89,22 +92,30 @@ EOF
 #查看可以安装的版本
 ### yum list kubelet kubeadm --showduplicates|sort -r
 
-#安装指定的软件包 kubelet-1.18.3 kubeadm-1.18.3 kubectl-1.18.3
-yum install -y kubelet kubectl kubeadm
-
-#设置kubelet忽略关闭swap
-mkdir /etc/kubeconfig
-cat > /etc/kubeconfig/kubelet <<EOF
-KUBELET_EXTRA_ARGS="--fail-swap-on=false"
-EOF
-
+#安装指定的软件包 kubelet-1.14.3 kubeadm-1.14.3 kubectl-1.14.3
+yum install -y kubelet-${K8S-VERSION} kubectl-${K8S-VERSION} kubeadm-${K8S-VERSION}
 #设置开机自动启动kubelet
 systemctl enable kubelet.service
+
+#生成kubeadm-config.yaml文件
+kubeadm config print init-defaults > /root/kubeadm-config.yaml
+
+#kubeadm-config.yaml组成部署说明：
+#InitConfiguration： 用于定义一些初始化配置，如初始化使用的token以及apiserver地址等
+#ClusterConfiguration：用于定义apiserver、etcd、network、scheduler、controller-manager等master组件相关配置项
+#KubeletConfiguration：用于定义kubelet组件相关的配置项
+#KubeProxyConfiguration：用于定义kube-proxy组件相关的配置项
+
+# 生成KubeletConfiguration示例文件 
+#kubeadm config print init-defaults --component-configs KubeletConfiguration
+
+# 生成KubeProxyConfiguration示例文件 
+#kubeadm config print init-defaults --component-configs KubeProxyConfiguration
 
 #创建kubeadm配置文件kubeadm-config.yaml
 
 #初始化master节点
-#kubeadm init --config=/root/kubeadm-config.yaml
+kubeadm init --config /root/kubeadm-config.yaml
 
 
 #kubectl客户端配置
