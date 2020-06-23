@@ -17,4 +17,4 @@ ed7ea5ae0c06f4ace9013e663b223e8da72e4e94e4dc657cfb1db68d777f3984
 
 # join加入
 [root@k8s-node01 ~]# kubeadm reset
-[root@k8s-node01 ~]# kubeadm join 192.168.1.200:6443 --token wxvdun.vec7m9cu4ru3hngg     --discovery-token-ca-cert-hash sha256:ed7ea5ae0c06f4ace9013e663b223e8da72e4e94e4dc657cfb1db68d777f3984 
+[root@k8s-node01 ~]# kubeadm join 192.168.1.200:6443 --token wxvdun.vec7m9cu4ru3hngg  --discovery-token-ca-cert-hash sha256:ed7ea5ae0c06f4ace9013e663b223e8da72e4e94e4dc657cfb1db68d777f3984 
