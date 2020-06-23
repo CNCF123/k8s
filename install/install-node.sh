@@ -1,5 +1,8 @@
 #!/bin/bash
-# k8s-v1.18.3 安装node节点
+# 安装node节点
+
+DOCKER-VERSION="19.03.9"
+K8S-VERSION="1.14.3"
 
 #关闭SELinux
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
@@ -46,7 +49,7 @@ yum install -y yum-utils device-mapper-persistent-data lvm2
 #添加yum仓库
 yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 #安装docker
-yum install -y docker-ce docker-ce-cli containerd.io
+yum install -y docker-ce-${DOCKER-VERSION} docker-ce-cli-${DOCKER-VERSION} containerd.io
 
 #创建docker配置文件
 mkdir -p /etc/docker
@@ -87,15 +90,8 @@ EOF
 #查看可以安装的版本
 ### yum list kubelet kubeadm --showduplicates|sort -r
 
-#安装指定的软件包 kubelet-1.18.3 kubeadm-1.18.3
-yum install -y kubelet kubeadm
-
-#设置kubelet忽略关闭swap
-mkdir /etc/kubeconfig
-cat > /etc/kubeconfig/kubelet <<EOF
-KUBELET_EXTRA_ARGS="--fail-swap-on=false"
-EOF
-
+#安装指定的软件包 kubelet-1.14.3 kubeadm-1.14.3
+yum install -y kubelet-${K8S-VERSION} kubeadm-${K8S-VERSION}
 #设置开机自动启动kubelet
 systemctl enable kubelet.service
 
