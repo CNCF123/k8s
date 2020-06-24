@@ -2,7 +2,7 @@
 # 安装node节点
 
 DockerVersion="19.03.9"
-K8sVersion="v1.14.3"
+K8sVersion="v1.18.3"
 
 #关闭SELinux
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
@@ -90,7 +90,7 @@ EOF
 #查看可以安装的版本
 ### yum list kubelet kubeadm --showduplicates|sort -r
 
-#安装指定的软件包 kubelet-1.14.3 kubeadm-1.14.3
+#安装指定的软件包 kubelet-1.18.3 kubeadm-1.18.3
 yum install -y kubelet-${K8sVersion} kubeadm-${K8sVersion} --setopt=obsoletes=0
 #设置开机自动启动kubelet
 systemctl enable kubelet.service
