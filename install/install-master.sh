@@ -1,7 +1,6 @@
 #!/bin/bash
 #安装master节点
 
-DockerVersion="19.03.9"
 K8sVersion="v1.18.3"
 
 #关闭SELinux
@@ -51,7 +50,7 @@ yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/
 # 安装指定版本的Docker-CE:
 # yum list docker-ce.x86_64 --showduplicates | sort -r
 #安装docker
-yum install -y docker-ce-${DockerVersion} docker-ce-cli-${DockerVersion} containerd.io
+yum install -y docker-ce docker-ce-cli containerd.io
 
 #创建docker配置文件
 mkdir -p /etc/docker
