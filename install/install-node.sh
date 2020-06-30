@@ -95,5 +95,25 @@ yum install -y kubelet-${K8sVersion} kubeadm-${K8sVersion} --setopt=obsoletes=0
 #设置开机自动启动kubelet
 systemctl enable kubelet.service
 
+kubeadm config images list
+
+images=(
+    kube-apiserver:${K8sVersion}
+    kube-controller-manager:${K8sVersion}
+    kube-scheduler:${K8sVersion}
+    kube-proxy:${K8sVersion}
+    pause:3.2
+    etcd:3.4.3-0
+    coredns:1.6.7
+)
+for imageName in ${images[@]};
+do
+    docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/${imageName}
+    docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/${imageName} k8s.gcr.io/${imageName}
+    docker rmi registry.cn-hangzhou.aliyuncs.com/google_containers/${imageName}
+done
+
+docker image ls
+
 #配置从节点
 #kubeadm join slb-devops-k8sapi-p01.devops.vipabc.com:6443 --token tq6h4u.an7lj8cbao0g9u6r --discovery-token-ca-cert-hash sha256:6bac5edc327da9d5233d09c5279c73351c3a98fb8e92e24b3767dfffc89a5fa0
