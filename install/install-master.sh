@@ -4,26 +4,6 @@
 DockerVersion="19.03.9"
 K8sVersion="v1.18.3"
 
-kubeadm config images list
-
-images=(
-    kube-apiserver:${K8sVersion}
-    kube-controller-manager:${K8sVersion}
-    kube-scheduler:${K8sVersion}
-    kube-proxy:${K8sVersion}
-    pause:3.2
-    etcd:3.4.3-0
-    coredns:1.6.7
-)
-for imageName in ${images[@]};
-do
-    docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/${imageName}
-    docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/${imageName} k8s.gcr.io/${imageName}
-    docker rmi registry.cn-hangzhou.aliyuncs.com/google_containers/${imageName}
-done
-
-docker image ls
-
 #关闭SELinux
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
 setenforce 0
@@ -116,6 +96,26 @@ EOF
 yum install -y kubelet-${K8sVersion} kubectl-${K8sVersion} kubeadm-${K8sVersion} --setopt=obsoletes=0
 #设置开机自动启动kubelet
 systemctl enable kubelet.service
+
+kubeadm config images list
+
+images=(
+    kube-apiserver:${K8sVersion}
+    kube-controller-manager:${K8sVersion}
+    kube-scheduler:${K8sVersion}
+    kube-proxy:${K8sVersion}
+    pause:3.2
+    etcd:3.4.3-0
+    coredns:1.6.7
+)
+for imageName in ${images[@]};
+do
+    docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/${imageName}
+    docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/${imageName} k8s.gcr.io/${imageName}
+    docker rmi registry.cn-hangzhou.aliyuncs.com/google_containers/${imageName}
+done
+
+docker image ls
 
 #生成kubeadm-config.yaml文件
 kubeadm config print init-defaults > /root/kubeadm-config.yaml
