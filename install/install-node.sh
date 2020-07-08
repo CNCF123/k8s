@@ -1,7 +1,10 @@
 #!/bin/bash
 # 安装node节点
 
-DockerVersion="19.03.9"
+#先卸载 kubelet kubeadm
+yum remove -y kubelet kubeadm
+
+#设置k8s的版本
 K8sVersion="v1.18.3"
 
 #关闭SELinux
@@ -49,7 +52,7 @@ yum install -y yum-utils device-mapper-persistent-data lvm2
 #添加yum仓库
 yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 #安装docker
-yum install -y docker-ce-${DockerVersion} docker-ce-cli-${DockerVersion} containerd.io
+yum install -y docker-ce docker-ce-cli containerd.io
 
 #创建docker配置文件
 mkdir -p /etc/docker
@@ -95,7 +98,8 @@ yum install -y kubelet-${K8sVersion} kubeadm-${K8sVersion} --setopt=obsoletes=0
 #设置开机自动启动kubelet
 systemctl enable kubelet.service
 
-kubeadm config images list
+kubeadm config images list > /root/images-list
+PauseVersion
 
 images=(
     kube-apiserver:${K8sVersion}
