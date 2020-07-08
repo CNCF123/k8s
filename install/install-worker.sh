@@ -2,7 +2,7 @@
 # 安装node节点
 
 #先卸载 kubelet kubeadm
-yum remove -y kubelet kubeadm
+yum remove -y kubelet kubeadm kubectl
 
 #设置k8s的版本
 K8sVersion="v1.18.3"
@@ -94,7 +94,7 @@ EOF
 ### yum list kubelet kubeadm --showduplicates|sort -r
 
 #安装指定的软件包
-yum install -y kubelet-${K8sVersion} kubeadm-${K8sVersion} --setopt=obsoletes=0
+yum install -y kubelet-${K8sVersion} kubeadm-${K8sVersion} kubectl-${K8sVersion} --setopt=obsoletes=0
 #设置开机自动启动kubelet
 systemctl enable kubelet.service
 
