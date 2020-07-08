@@ -6,6 +6,7 @@ yum remove -y kubelet kubeadm kubectl
 
 #设置k8s的版本
 K8sVersion="1.18.3"
+vK8sVersion="v1.18.3"
 
 #关闭SELinux
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
@@ -109,10 +110,10 @@ EtcdVersion=`grep 'etcd' /root/kubeadm-config-images-list |awk -F: '{print $2}'`
 CorednsVersion=`grep 'coredns' /root/kubeadm-config-images-list |awk -F: '{print $2}'`
 
 images=(
-    kube-apiserver:${K8sVersion}
-    kube-controller-manager:${K8sVersion}
-    kube-scheduler:${K8sVersion}
-    kube-proxy:${K8sVersion}
+    kube-apiserver:${vK8sVersion}
+    kube-controller-manager:${vK8sVersion}
+    kube-scheduler:${vK8sVersion}
+    kube-proxy:${vK8sVersion}
     pause:${PauseVersion}
     etcd:${EtcdVersion}
     coredns:${CorednsVersion}
