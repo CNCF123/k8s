@@ -1,6 +1,10 @@
 #!/bin/bash
 #安装master节点
 
+#无论是否已安装，先卸载 kubelet kubeadm
+yum remove -y kubelet kubeadm
+
+#设置k8s的版本
 K8sVersion="v1.18.3"
 
 #关闭SELinux
@@ -96,16 +100,22 @@ yum install -y kubelet-${K8sVersion} kubectl-${K8sVersion} kubeadm-${K8sVersion}
 #设置开机自动启动kubelet
 systemctl enable kubelet.service
 
-kubeadm config images list
+#查询k8s安装镜像的版本
+kubeadm config images list > /root/kubeadm-config-images-list
+
+#获取 pause,etcd,coredns的版本
+PauseVersion=`grep 'pause' /root/kubeadm-config-images-list |awk -F: '{print $2}'`
+EtcdVersion=`grep 'etcd' /root/kubeadm-config-images-list |awk -F: '{print $2}'`
+CorednsVersion=`grep 'coredns' /root/kubeadm-config-images-list |awk -F: '{print $2}'`
 
 images=(
     kube-apiserver:${K8sVersion}
     kube-controller-manager:${K8sVersion}
     kube-scheduler:${K8sVersion}
     kube-proxy:${K8sVersion}
-    pause:3.2
-    etcd:3.4.3-0
-    coredns:1.6.7
+    pause:${PauseVersion}
+    etcd:${EtcdVersion}
+    coredns:${CorednsVersion}
 )
 for imageName in ${images[@]};
 do
@@ -134,7 +144,7 @@ kubeadm config print init-defaults > /root/kubeadm-config.yaml
 #创建kubeadm配置文件kubeadm-config.yaml
 
 #初始化master节点
-kubeadm init --config /root/kubeadm-config.yaml
+#kubeadm init --config /root/kubeadm-config.yaml
 
 
 #kubectl客户端配置
