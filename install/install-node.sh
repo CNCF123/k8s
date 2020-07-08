@@ -98,17 +98,22 @@ yum install -y kubelet-${K8sVersion} kubeadm-${K8sVersion} --setopt=obsoletes=0
 #设置开机自动启动kubelet
 systemctl enable kubelet.service
 
-kubeadm config images list > /root/images-list
-PauseVersion
+#查询k8s安装镜像的版本
+kubeadm config images list > /root/kubeadm-config-images-list
+
+#获取 pause,etcd,coredns的版本
+PauseVersion=`grep 'pause' /root/kubeadm-config-images-list |awk -F: '{print $2}'`
+EtcdVersion=`grep 'etcd' /root/kubeadm-config-images-list |awk -F: '{print $2}'`
+CorednsVersion=`grep 'coredns' /root/kubeadm-config-images-list |awk -F: '{print $2}'`
 
 images=(
     kube-apiserver:${K8sVersion}
     kube-controller-manager:${K8sVersion}
     kube-scheduler:${K8sVersion}
     kube-proxy:${K8sVersion}
-    pause:3.2
-    etcd:3.4.3-0
-    coredns:1.6.7
+    pause:${PauseVersion}
+    etcd:${EtcdVersion}
+    coredns:${CorednsVersion}
 )
 for imageName in ${images[@]};
 do
@@ -118,6 +123,7 @@ do
 done
 
 docker image ls
+
 
 #配置从节点
 #kubeadm join slb-devops-k8sapi-p01.devops.vipabc.com:6443 --token tq6h4u.an7lj8cbao0g9u6r --discovery-token-ca-cert-hash sha256:6bac5edc327da9d5233d09c5279c73351c3a98fb8e92e24b3767dfffc89a5fa0
