@@ -1,5 +1,47 @@
 kubeadm config print init-defaults  > kubeadm-config.yaml
 
+apiVersion: kubeadm.k8s.io/v1beta2
+bootstrapTokens:
+- groups:
+  - system:bootstrappers:kubeadm:default-node-token
+  token: abcdef.0123456789abcdef
+  ttl: 24h0m0s
+  usages:
+  - signing
+  - authentication
+kind: InitConfiguration
+localAPIEndpoint:
+  advertiseAddress: 192.168.0.200 ### 当前 master 的 ip 
+  bindPort: 6443
+nodeRegistration:
+  criSocket: /var/run/dockershim.sock
+  name: k8s-master01 ### 当前 master 的名称
+  taints:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+---
+apiServer:
+  timeoutForControlPlane: 4m0s
+apiVersion: kubeadm.k8s.io/v1beta2
+certificatesDir: /etc/kubernetes/pki
+clusterName: kubernetes
+controlPlaneEndpoint: 192.168.0.99:6443 ### 负载均衡的ip地址和port端口
+controllerManager: {}
+dns:
+  type: CoreDNS
+etcd:
+  local:
+    dataDir: /var/lib/etcd
+imageRepository: registry.cn-hangzhou.aliyuncs.com/google_containers  ### 阿里云 k8s 镜像
+kind: ClusterConfiguration
+kubernetesVersion: v1.18.0
+networking:
+  dnsDomain: cluster.local
+  serviceSubnet: 10.96.0.0/12
+  podSubnet: 10.244.0.0/16  ### pod 网段
+scheduler: {}
+
+
 kubeadm-config.yaml组成部署说明：
 
 InitConfiguration： 用于定义一些初始化配置，如初始化使用的token以及apiserver地址等
