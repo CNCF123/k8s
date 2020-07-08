@@ -1,8 +1,8 @@
 #!/bin/bash
 #安装master节点
 
-#无论是否已安装，先卸载 kubelet kubeadm
-yum remove -y kubelet kubeadm
+#无论是否已安装，先卸载 kubelet kubeadm kubectl
+yum remove -y kubelet kubeadm kubectl
 
 #设置k8s的版本
 K8sVersion="v1.18.3"
