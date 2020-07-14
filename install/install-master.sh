@@ -64,7 +64,7 @@ cat > /etc/docker/daemon.json <<EOF
 "insecure-registry": [
     "devops-hub.tutorabc.com.cn"
 ],
-"registry-mirror": "https://5cs233bb.mirror.aliyuncs.com",
+"registry-mirror": ["https://5cs233bb.mirror.aliyuncs.com"],
 "graph": "/data/docker",
 "exec-opts": ["native.cgroupdriver=systemd"]
 }
