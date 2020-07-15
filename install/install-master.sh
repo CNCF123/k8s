@@ -129,20 +129,6 @@ docker image ls
 #生成kubeadm-config.yaml文件
 kubeadm config print init-defaults > /root/kubeadm-config.yaml
 
-#kubeadm-config.yaml组成部署说明：
-#InitConfiguration： 用于定义一些初始化配置，如初始化使用的token以及apiserver地址等
-#ClusterConfiguration：用于定义apiserver、etcd、network、scheduler、controller-manager等master组件相关配置项
-#KubeletConfiguration：用于定义kubelet组件相关的配置项
-#KubeProxyConfiguration：用于定义kube-proxy组件相关的配置项
-
-# 生成KubeletConfiguration示例文件 
-#kubeadm config print init-defaults --component-configs KubeletConfiguration
-
-# 生成KubeProxyConfiguration示例文件 
-#kubeadm config print init-defaults --component-configs KubeProxyConfiguration
-
-#创建kubeadm配置文件kubeadm-config.yaml
-
 #初始化master节点
 #kubeadm init --config /root/kubeadm-config.yaml
 
