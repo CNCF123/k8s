@@ -1,4 +1,4 @@
-kubeadm config print init-defaults  > kubeadm-config.yaml
+kubeadm config print init-defaults  > /root/kubeadm-config.yaml
 
 #####
 apiVersion: kubeadm.k8s.io/v1beta2
