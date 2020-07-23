@@ -53,7 +53,7 @@ yum install -y yum-utils device-mapper-persistent-data lvm2
 #添加yum仓库
 yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 #安装docker
-yum install -y docker-ce docker-ce-cli containerd.io
+yum install -y docker-ce-19.03.5 docker-ce-cli-19.03.5 containerd.io
 
 #创建docker配置文件
 mkdir -p /etc/docker
@@ -120,7 +120,6 @@ for imageName in ${images[@]};
 do
     docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/${imageName}
     docker tag registry.cn-hangzhou.aliyuncs.com/google_containers/${imageName} k8s.gcr.io/${imageName}
-    docker rmi registry.cn-hangzhou.aliyuncs.com/google_containers/${imageName}
 done
 
 docker image ls
