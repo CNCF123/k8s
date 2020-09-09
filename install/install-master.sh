@@ -62,7 +62,7 @@ mkdir -p /etc/docker
 cat > /etc/docker/daemon.json <<EOF 
 {
 "insecure-registry": [
-    "devops-hub.tutorabc.com.cn"
+    "docker-hub.chenkaidi.com"
 ],
 "registry-mirrors": ["https://5cs233bb.mirror.aliyuncs.com"],
 "graph": "/data/docker",
@@ -118,6 +118,7 @@ images=(
     etcd:${EtcdVersion}
     coredns:${CorednsVersion}
 )
+
 for imageName in ${images[@]};
 do
     docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/${imageName}
