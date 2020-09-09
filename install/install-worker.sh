@@ -116,6 +116,7 @@ images=(
     etcd:${EtcdVersion}
     coredns:${CorednsVersion}
 )
+
 for imageName in ${images[@]};
 do
     docker pull registry.cn-hangzhou.aliyuncs.com/google_containers/${imageName}
