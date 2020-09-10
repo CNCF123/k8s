@@ -95,7 +95,7 @@ yum install -y yum-utils device-mapper-persistent-data lvm2
 #添加yum仓库
 yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 #安装docker
-yum install -y docker-ce-19.03.5
+yum install -y docker-ce
 
 #创建docker配置文件
 mkdir -p /etc/docker
