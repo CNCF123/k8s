@@ -97,8 +97,7 @@ yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/
 # 安装指定版本的Docker-CE:
 # yum list docker-ce.x86_64 --showduplicates | sort -r
 #安装docker
-yum install -y docker-ce-19.03.5 docker-ce-cli-19.03.5 containerd.io
-
+yum install -y docker-ce-19.03.5
 #创建docker配置文件
 mkdir -p /etc/docker
 cat > /etc/docker/daemon.json <<EOF 
