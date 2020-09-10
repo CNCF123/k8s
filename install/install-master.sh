@@ -33,7 +33,6 @@ fs.inotify.max_user_watches=89100
 fs.file-max=52706963
 fs.nr_open=52706963
 net.netfilter.nf_conntrack_max=2310720
-
 net.ipv4.tcp_keepalive_time = 600
 net.ipv4.tcp_keepalive_probes = 3
 net.ipv4.tcp_keepalive_intvl =15
