@@ -7,12 +7,12 @@
 
 https://github.com/kubernetes-sigs/metrics-server
 
-2.metrics-server程序默认会从kubelet的基于HTTP通信的10255端口获取指标数据，但出于安全通信的目的，Kubernetes1.11版本的kubeadm在初始化集群时会关掉kubelet基于HTTP的10255 端口，从而导致其部署完成后无法正常获取数据，修改命令参数，下面在metrics-server容器配置段中添加如下内容，
+2.metrics-server程序默认会从kubelet的基于HTTP通信的10255端口获取指标数据，
+但出于安全通信的目的，Kubernetes1.11版本的kubeadm在初始化集群时会关掉kubelet基于HTTP的10255 端口，从而导致其部署完成后无法正常获取数据，
+修改命令参数，下面在metrics-server容器配置段中添加如下内容，
+
 请打开raw格式
 
 command: 
 - /metrics-server
 - --source=kubernetes.summary_api:https://kubernetes.default?kubeletHttps=true&kubeletPort=10250&insecure=true
-
-3.执行
-kubectl apply -f metrics-server/deploy/1.8+/
