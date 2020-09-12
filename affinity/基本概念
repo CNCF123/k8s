@@ -17,3 +17,13 @@ PodAntiAffinity：Pod反亲和力
     RequiredDuringSchedulingIgnoredDuringExecution：不要将A应用与与之匹配的应用部署在一块
     
     PreferredDuringSchedulingIgnoredDuringExecution： 尽量不要将A应用与与之匹配的应用部署在一块
+    
+
+operator选项：
+In：部署在满足多个条件的节点上
+NotIn：不要部署在满足这些条件的节点上
+Exists：部署在具有某个存在key为指定的值的Node节点上
+DoesNotExist：和Exists相反
+Gt： 大于指定的条件  条件为number，不能为字符串
+Lt：小于指定的条件
+
