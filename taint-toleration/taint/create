@@ -1,1 +1,1 @@
-kubectl taint node k8s-node01 key=value:NoSchedule
+kubectl taint node k8s-node01 key=value:NoSchedule  # NoSchedule, PreferNoSchedule and NoExecute.
