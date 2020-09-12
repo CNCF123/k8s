@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test
+spec:
+  replicas: 3
+  template:
+    spec:
+      ...
+      tolerations:
+      - key: master-test
+        operator: Equal
+        value: test
+        effect: NoSchedule
