@@ -1,0 +1,1 @@
+kubectl taint node k8s-master01 master-test=test:NoSchedule-
