@@ -5,4 +5,6 @@ postStart：容器启动之前执行的命令
 preStop：容器停止之前执行的命令
 
 热更新ConfigMap或Secret：
+1.使用kubectl edit
+2.使用 --dry-run
 [root@k8s-master01 ~]# kubectl create cm nginx-conf --from-file=nginx.conf --dry-run -o yaml  | kubectl replace -f-
