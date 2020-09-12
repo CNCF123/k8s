@@ -1,1 +1,6 @@
 kubectl taint node k8s-node01 key=value:NoSchedule  # NoSchedule, PreferNoSchedule and NoExecute.
+
+NoSchedule：禁止调度
+NoExecute：如果不符合这个污点，会立马被驱逐
+PreferNoSchedule: 尽量避免将Pod调度到指定的节点上。
+
