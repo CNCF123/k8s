@@ -1,0 +1,19 @@
+NodeAffinity：节点亲和力，
+
+    RequiredDuringSchedulingIgnoredDuringExecution：硬亲和力，即支持必须部署在指定的节点上，也支持必须不部署在指定的节点上。
+
+    PreferredDuringSchedulingIgnoredDuringExecution：软亲和力，尽量部署在满足条件的节点上，或者是尽量不要部署在被匹配的节点。
+
+
+PodAffinity：Pod亲和力
+
+    RequiredDuringSchedulingIgnoredDuringExecution：将A应用和B应用部署在一块
+
+    PreferredDuringSchedulingIgnoredDuringExecution：尽量将A应用和B应用部署在一块
+
+
+PodAntiAffinity：Pod反亲和力
+
+    RequiredDuringSchedulingIgnoredDuringExecution：不要将A应用与与之匹配的应用部署在一块
+    
+    PreferredDuringSchedulingIgnoredDuringExecution： 尽量不要将A应用与与之匹配的应用部署在一块
