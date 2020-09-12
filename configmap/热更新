@@ -1,0 +1,10 @@
+ConfigMap和Secret如果是以subPath 的形式挂载的，那么Pod是不会感知到ConfigMap和Secret的更新的。
+如果Pod的变量来自于ConfigMap和Secret中定义的内容，那么ConfigMap和Secret更新后，也不会更新Pod中的变量。
+
+
+postStart：容器启动之前执行的命令
+preStop：容器停止之前执行的命令
+
+
+热更新ConfigMap或Secret：
+[root@k8s-master01 ~]# kubectl create cm nginx-conf --from-file=nginx.conf --dry-run -oyaml  | kubectl replace -f-
