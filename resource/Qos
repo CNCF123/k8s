@@ -1,4 +1,4 @@
-Guaranteed：
+Guaranteed：（最高）
 limits:
   cpu: 100m
   memory: 100Mi
@@ -16,5 +16,5 @@ requests:
   memory: 50Mi
 Pod 里至少有一个容器有内存或者 CPU 请求且不满足 Guarantee 等级的要求，即内存/CPU 的值设置的不同。
 
-BestEffort：
+BestEffort：（最低）
 容器必须没有任何内存或者 CPU 的限制或请求。
