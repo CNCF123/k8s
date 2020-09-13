@@ -1,10 +1,10 @@
-  apiVersion: v1
+apiVersion: v1
 kind: Pod
 metadata:
-  name: pv-pod
+  name: pod-storageclass
 spec:
   containers:
-    - name: pv-container
+    - name: container-storageclass
       image: nginx
       ports:
         - containerPort: 80
