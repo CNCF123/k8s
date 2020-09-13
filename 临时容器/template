@@ -1,0 +1,3 @@
+k8s版本 1.16及其以上
+
+shareProcessNamespace: true
