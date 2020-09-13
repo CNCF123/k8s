@@ -19,6 +19,6 @@ spec:
       cpu: 2
       memory: 2Gi
     maxLimitRequestRatio: # max value for limit / request
-      cpu: 4
-      memory: 4
+      cpu: 10
+      memory: 10
 
