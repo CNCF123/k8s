@@ -7,4 +7,4 @@ runtime-config=settings.k8s.io/v1alpha1=true
 enable-admission-plugins后面增加添加一行配置 - --runtime-config=settings.k8s.io/v1alpha1=true，等待ApiServer自动重启完成。
 
 禁用PodPreset：
-在一些情况下，用户不希望 Pod 被 PodPreset 所改动，这时，用户可以在 Pod.spec 中添加形如 podpreset.admission.kubernetes.io/exclude: "true" 的注解。
+在一些情况下，用户不希望 Pod 被 PodPreset 所改动，这时，用户可以在 Pod.spec 中添加形如 podpreset.admission.kubernetes.io/exclude: "true" 的注解，注意应该是deployment中的annotation
