@@ -6,13 +6,13 @@ metadata:
 spec:
   limits:
   - max:
-      cpu: 4
+      cpu: 2
       memory: 4Gi
     min:
       cpu: 100m
       memory: 100Mi
     maxLimitRequestRatio:
-      cpu: 4
+      cpu: 2
       memory: 4
     type: Pod
   - default: #在没有配置的情况下，使用默认配置
