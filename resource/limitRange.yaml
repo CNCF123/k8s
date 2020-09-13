@@ -5,7 +5,8 @@ metadata:
   namespace: test
 spec:
   limits:
-  - default: # 在没有配置的情况下，使用默认配置 default limit
+  - type: Container # limit type, support: Container / Pod / PersistentVolumeClaim
+    default: # 在没有配置的情况下，使用默认配置 default limit
       cpu: 200m # limit cpu
       memory: 500Mi # limit memory
     defaultRequest: # default request
@@ -20,4 +21,4 @@ spec:
     maxLimitRequestRatio: # max value for limit / request
       cpu: 4
       memory: 4
-    type: Container # limit type, support: Container / Pod / PersistentVolumeClaim
+
