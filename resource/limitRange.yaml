@@ -28,6 +28,6 @@ spec:
       cpu: 2
       memory: 2Gi
     maxLimitRequestRatio:
-      cpu: 5
-      memory: 5
+      cpu: 4
+      memory: 4
     type: Container
