@@ -1,24 +1,55 @@
 apiVersion: v1
-kind: limitRange
+kind: LimitRange
 metadata:
-  name: limits-ns-test
-  namespace: test
+  name: mylimits
 spec:
   limits:
-  - type: Container # limit type, support: Container / Pod / PersistentVolumeClaim
-    default: # 在没有配置的情况下，使用默认配置 default limit
-      cpu: 200m # limit cpu
-      memory: 500Mi # limit memory
-    defaultRequest: # default request
-      cpu: 100m 
-      memory: 200Mi
-    min: # min request
-      cpu: 100m
-      memory: 100Mi
-    max: # max limit
-      cpu: 2
+  - type: Pod
+    max:
+      cpu: "4"
       memory: 2Gi
-    maxLimitRequestRatio: # max value for limit / request
-      cpu: 10
-      memory: 10
+    min:
+      cpu: 200m
+      memory: 6Mi
+    maxLimitRequestRatio:
+      cpu: 3
+      memory: 2  
+      
+pod部分：
+max表示pod中所有容器资源的Limit值和的上限，也就是整个pod资源的最大Limit，如果pod定义中的Limit值大于LimitRange中的值，则pod无法成功创建。
+min表示pod中所有容器资源请求总和的下限，也就是所有容器request的资源总和不能小于min中的值，否则pod无法成功创建。
+maxLimitRequestRatio表示pod中所有容器资源请求的Limit值和request值比值的上限，例如该pod中cpu的Limit值为3，而request为0.5，此时比值为6，创建pod将会失败。
 
+  - type: Container
+    default:
+      cpu: 300m
+      memory: 200Mi
+    defaultRequest:
+      cpu: 200m
+      memory: 100Mi
+    max:
+      cpu: "2"
+      memory: 1Gi
+    min:
+      cpu: 100m
+      memory: 3Mi
+    maxLimitRequestRatio:
+      cpu: 5
+      memory: 4
+    
+container部分：
+在container的部分，max、min和maxLimitRequestRatio的含义和pod中的类似，只不过是针对单个的容器而言。下面说明几个情况：
+如果container设置了max， pod中的容器必须设置limit，如果未设置，则使用defaultlimt的值，如果defaultlimit也没有设置，则无法成功创建
+如果设置了container的min，创建容器的时候必须设置request的值，如果没有设置，则使用defaultrequest，如果没有defaultrequest，则默认等于容器的limit值，如果limit也没有，启动就会报错
+defaultrequest和defaultlimit则是默认值，注意：pod级别没有这两项设置
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
