@@ -1,0 +1,3 @@
+kube-apiserver.yaml
+添加参数
+--runtime-config=settings.k8s.io/v1alpha1=true
