@@ -1,0 +1,18 @@
+apiVersion: settings.k8s.io/v1alpha1
+kind: PodPreset
+metadata:
+  name: setting-timezone
+spec:
+  selector:
+    matchLabels:
+  env:
+    - name: TZ
+      value: Asia/Shanghai
+  volumeMounts:
+    - mountPath: /etc/localtime
+      name: tz-config
+      readOnly: true
+  volumes:
+    - name: tz-config
+      hostPath:
+        path: /etc/localtime
