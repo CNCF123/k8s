@@ -5,7 +5,7 @@ limits:
 requests:
   cpu: 100m
   memory: 100Mi
-Pod 里的每个容器都必须有内存/CPU 限制和请求，而且值必须相等。如果一个容器只指明limit而未设定request，则request的值等于limit值。
+Pod 里的每个容器都必须有内存/CPU 限制和请求，而且值必须相等。
 
 Burstable：
 limits:
