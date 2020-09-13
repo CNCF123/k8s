@@ -1,3 +1,7 @@
-kube-apiserver.yaml
+如何开启PodPreset：
+vim /etc/kubernetes/manifests/kube-apiserver.yaml
+
 添加参数
---runtime-config=settings.k8s.io/v1alpha1=true
+runtime-config=settings.k8s.io/v1alpha1=true
+
+enable-admission-plugins后面增加添加一行配置 - --runtime-config=settings.k8s.io/v1alpha1=true，等待ApiServer自动重启完成。
