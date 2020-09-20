@@ -28,7 +28,7 @@ yum install ipset -y
 为了方便查看ipvs规则我们要安装ipvsadm(可选)
 yum install ipvsadm -y
 ---
-#修改ConfigMap的kube-system/kube-proxy中的config.conf，把 mode: "" 改为mode: “ipvs" 保存退出即可
+#修改ConfigMap的kube-system/kube-proxy中的config.conf，把 mode: "" 改为mode: "ipvs" 保存退出即可
 [root@k8smaster centos]# kubectl edit cm kube-proxy -n kube-system
 configmap/kube-proxy edited
 ###删除之前的proxy pod
