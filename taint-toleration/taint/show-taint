@@ -1,21 +1,12 @@
-[root@k8s-master-66 ~]# k-desc node k8s-master-66
+[root@k8s-master-66 ~]# kubectl describe nodes |grep -e Name: -e Taints:
 Name:               k8s-master-66
-Roles:              master
-Labels:             beta.kubernetes.io/arch=amd64
-                    beta.kubernetes.io/os=linux
-                    kubernetes.io/arch=amd64
-                    kubernetes.io/hostname=k8s-master-66
-                    kubernetes.io/os=linux
-                    node-role.kubernetes.io/master=
-Annotations:        flannel.alpha.coreos.com/backend-data: {"VtepMAC":"de:f8:ba:ec:58:9d"}
-                    flannel.alpha.coreos.com/backend-type: vxlan
-                    flannel.alpha.coreos.com/kube-subnet-manager: true
-                    flannel.alpha.coreos.com/public-ip: 172.16.0.66
-                    kubeadm.alpha.kubernetes.io/cri-socket: /var/run/dockershim.sock
-                    node.alpha.kubernetes.io/ttl: 0
-                    volumes.kubernetes.io/controller-managed-attach-detach: true
-CreationTimestamp:  Thu, 10 Sep 2020 18:09:25 +0800
 Taints:             node-role.kubernetes.io/master:NoSchedule
+Name:               k8s-node-67
+Taints:             <none>
+Name:               k8s-node-68
+Taints:             <none>
+Name:               k8s-node-69
+Taints:             <none>
 
 
 
