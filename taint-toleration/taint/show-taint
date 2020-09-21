@@ -1,11 +1,11 @@
-[root@k8s-master-66 ~]# kubectl describe nodes |grep -e Name: -e Taints:
-Name:               k8s-master-66
+[root@k8s-master-01 ~]# kubectl describe nodes |grep -e Name: -e Taints:
+Name:               k8s-master-01
 Taints:             node-role.kubernetes.io/master:NoSchedule
-Name:               k8s-node-67
+Name:               k8s-node-01
 Taints:             <none>
-Name:               k8s-node-68
+Name:               k8s-node-02
 Taints:             <none>
-Name:               k8s-node-69
+Name:               k8s-node-03
 Taints:             <none>
 
 
