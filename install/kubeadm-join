@@ -17,4 +17,15 @@ ed7ea5ae0c06f4ace9013e663b223e8da72e4e94e4dc657cfb1db68d777f3984
 
 # join加入
 [root@k8s-node01 ~]# kubeadm reset
+[root@k8s-node01 ~]# systemctl stop kubelet
+[root@k8s-node01 ~]# systemctl stop docker
+[root@k8s-node01 ~]# rm -rf /var/lib/cni/
+[root@k8s-node01 ~]# rm -rf /var/lib/kubelet/*
+[root@k8s-node01 ~]# rm -rf /etc/cni/
+[root@k8s-node01 ~]# ifconfig cni0 down
+[root@k8s-node01 ~]# ifconfig flannel.1 down
+[root@k8s-node01 ~]# ifconfig docker0 down
+[root@k8s-node01 ~]# ip link delete cni0
+[root@k8s-node01 ~]# ip link delete flannel.1
+[root@k8s-node01 ~]# systemctl start docker
 [root@k8s-node01 ~]# kubeadm join 192.168.1.200:6443 --token wxvdun.vec7m9cu4ru3hngg  --discovery-token-ca-cert-hash sha256:ed7ea5ae0c06f4ace9013e663b223e8da72e4e94e4dc657cfb1db68d777f3984 
