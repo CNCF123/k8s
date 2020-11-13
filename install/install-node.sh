@@ -150,12 +150,8 @@ EtcdVersion=`grep 'etcd' /root/kubeadm-config-images-list |awk -F: '{print $2}'`
 CorednsVersion=`grep 'coredns' /root/kubeadm-config-images-list |awk -F: '{print $2}'`
 
 images=(
-    kube-apiserver:${vK8sVersion}
-    kube-controller-manager:${vK8sVersion}
-    kube-scheduler:${vK8sVersion}
     kube-proxy:${vK8sVersion}
     pause:${PauseVersion}
-    etcd:${EtcdVersion}
     coredns:${CorednsVersion}
 )
 
