@@ -12,13 +12,9 @@ Kubernetes 1.14是2019年发布的第一个正式版本。新版本有31个增�
 
 通过kubeadm部署高可用Kubernetes集群有两种架构，一种是将数据平面（etcd集群）和控制平面（Kubernetes控制节点）部署在一起，另一种是分开部署，其中部署在一起可以节省服务器，但是数据平面和控制平面耦合在一起，当一台机器故障时，数据平面和控制平面将同时出现问题。
 
-数据平面和控制平面共用节点：
+数据平面和控制平面共用节点
 
-![数据平面和控制平面共用节点](https://github.com/findsec-cn/k201/raw/master/imgs/1/kubeadm-ha-topology-stacked-etcd.png)
-
-数据平面和控制平面不共用节点：
-
-![数据平面和控制平面不共用节点](https://github.com/findsec-cn/k201/raw/master/imgs/1/kubeadm-ha-topology-external-etcd.png)
+数据平面和控制平面不共用节点
 
 我们按照数据平面和控制平面共用节点进行高可用集群的部署。
 
