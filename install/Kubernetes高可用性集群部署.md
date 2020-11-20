@@ -1,4 +1,4 @@
-# Kubernetes高可用性集群部署
+# Kubernetes高可用集群部署
 
 ## Kubernetes版本选择
 
