@@ -1,3 +1,9 @@
-添加参数
-        - --kubelet-insecure-tls                               # 避免x509: cannot validate certificate
-        - --kubelet-preferred-address-types=InternalIP         # 能够通过hostname解析
+参数
+      containers:
+      - args:
+        - --cert-dir=/tmp
+        - --secure-port=4443
+        - --kubelet-preferred-address-types=InternalIP
+        - --kubelet-use-node-status-port
+        - --kubelet-insecure-tls
+        image: k8s.gcr.io/metrics-server/metrics-server:v0.4.1
