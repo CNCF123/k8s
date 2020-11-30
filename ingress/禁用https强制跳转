@@ -1,5 +1,4 @@
 禁用https强制跳转
-nginx.ingress.kubernetes.io/ssl-redirect: "false"	
 
 apiVersion: extensions/v1beta1
 kind: Ingress
