@@ -1,0 +1,28 @@
+禁用https强制跳转
+nginx.ingress.kubernetes.io/ssl-redirect: "false"	
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+  generation: 1
+  name: test-tls
+  namespace: test
+spec:
+  rules:
+  - host: test-tls.test.com
+    http:
+      paths:
+      - backend:
+          serviceName: ingress-test
+          servicePort: 80
+        path: /
+  tls:
+  - hosts:
+    - test-tls.test.com
+    secretName: ca-cert
+
+
+设置默认证书：--default-ssl-certificate=default/foo-tls
+更改的ingress-controller的启动参数
