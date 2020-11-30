@@ -5,7 +5,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
   generation: 4
   name: ingress-test
-  namespace: ratel-test1
+  namespace: test
 spec:
   rules:
   - host: rewrite.test.com
