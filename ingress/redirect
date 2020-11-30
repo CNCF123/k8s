@@ -4,7 +4,7 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/permanent-redirect: https://www.baidu.com
   name: ingress-test
-  namespace: ratel-test1
+  namespace: test
 spec:
   rules:
   - host: ingress.test.com
