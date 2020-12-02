@@ -165,4 +165,4 @@ docker image ls
 
 
 #配置从节点
-#kubeadm join slb-devops-k8sapi-p01.devops.vipabc.com:6443 --token tq6h4u.an7lj8cbao0g9u6r --discovery-token-ca-cert-hash sha256:6bac5edc327da9d5233d09c5279c73351c3a98fb8e92e24b3767dfffc89a5fa0
+#kubeadm join slb-k8sapi.devops.com:6443 --token tq6h4u.an7lj8cbao0g9u6r --discovery-token-ca-cert-hash sha256:6bac5edc327da9d5233d09c5279c73351c3a98fb8e92e24b3767dfffc89a5fa0
