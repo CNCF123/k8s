@@ -5,8 +5,8 @@
 yum remove -y kubelet kubeadm kubectl
 
 #设置k8s的版本
-K8sVersion="1.18.5"
-vK8sVersion="v1.18.5"
+K8sVersion="1.18.8"
+vK8sVersion="v1.18.8"
 
 #关闭SELinux
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
