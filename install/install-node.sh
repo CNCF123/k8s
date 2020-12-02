@@ -1,7 +1,7 @@
 #!/bin/bash
-# 安装node节点
+#安装node节点
 
-#先卸载 kubelet kubeadm
+#无论是否已安装，先卸载 kubelet kubeadm kubectl
 yum remove -y kubelet kubeadm kubectl
 
 #设置k8s的版本
@@ -9,8 +9,11 @@ K8sVersion="1.18.8"
 vK8sVersion="v1.18.8"
 
 #关闭SELinux
-sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
-setenforce 0
+setenforce  0 
+sed -i "s/^SELINUX=enforcing/SELINUX=disabled/g" /etc/sysconfig/selinux 
+sed -i "s/^SELINUX=enforcing/SELINUX=disabled/g" /etc/selinux/config 
+sed -i "s/^SELINUX=permissive/SELINUX=disabled/g" /etc/sysconfig/selinux 
+sed -i "s/^SELINUX=permissive/SELINUX=disabled/g" /etc/selinux/config 
 
 #关闭防火墙
 systemctl stop firewalld
@@ -19,16 +22,17 @@ systemctl disable firewalld
 #关闭Swap分区
 #Kubernetes v1.8+要求关闭系统 Swap：
 sed -i /swap/s/^/#/g  /etc/fstab
-swapoff -a && sysctl -w vm.swappiness=0
+swapoff -a 
 
 #配置内核参数,开启bridge-nf
 cat >  /etc/sysctl.d/k8s.conf <<EOF 
 net.ipv4.ip_forward = 1
 net.bridge.bridge-nf-call-iptables = 1
 net.bridge.bridge-nf-call-ip6tables = 1
-fs.may_detach_mounts = 1
+vm.swappiness=0
 vm.overcommit_memory=1
 vm.panic_on_oom=0
+fs.may_detach_mounts = 1
 fs.inotify.max_user_watches=89100
 fs.file-max=52706963
 fs.nr_open=52706963
@@ -48,8 +52,15 @@ net.ipv4.tcp_timestamps = 0
 net.core.somaxconn = 16384
 EOF
 
-sysctl --system
+sysctl -p /etc/sysctl.d/k8s.conf
 
+###内核优化
+echo "* soft nofile 204800" >> /etc/security/limits.conf
+echo "* hard nofile 204800" >> /etc/security/limits.conf
+echo "* soft nproc 204800"  >> /etc/security/limits.conf
+echo "* hard nproc 204800"  >> /etc/security/limits.conf
+echo "* soft  memlock  unlimited"  >> /etc/security/limits.conf
+echo "* hard memlock  unlimited"  >> /etc/security/limits.conf
 
 #加载ipvs相关模块
 #kube-proxy使用ipvs模式，所以需要加ipvs相关的内核模块及安装ipset、ipvsadm软件包
@@ -63,7 +74,9 @@ modprobe -- ip_vs_sh
 modprobe -- nf_conntrack_ipv4
 EOF
 
-chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/ipvs.modules 
+chmod 755 /etc/sysconfig/modules/ipvs.modules 
+bash /etc/sysconfig/modules/ipvs.modules 
+
 
 cat > /etc/modules-load.d/ipvs.conf  <<EOF
 ip_vs
