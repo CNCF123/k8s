@@ -1,4 +1,4 @@
-## 基于Kubeadm部署KubernetesHA 高可用集群
+## Kubeadm部署KubernetesHA 高可用集群
 
 > DNS：CoreDNS
 >
