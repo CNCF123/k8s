@@ -1,5 +1,5 @@
 ![](Kubernetes-arch.jpg)
-kubernetes主要由以下几个核心组件组成：
+**kubernetes主要由以下几个核心组件组成：**
 etcd: 集群的主数据库，保存了整个集群的状态; etcd负责节点间的服务发现和配置共享。etcd分布式键值存储系统, 用于保持集群状态，比如Pod、Service等对象信息。
 kube-apiserver: 提供了资源操作的唯一入口，并提供认证、授权、访问控制、API注册和发现等机制；这是kubernetes API，作为集群的统一入口，各组件协调者，以HTTPAPI提供接口服务，所有对象资源的增删改查和监听操作都交给APIServer处理后再提交给Etcd存储。
 kube-controller-manager: 负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；它用来执行整个系统中的后台任务，包括节点状态状况、Pod个数、Pods和Service的关联等, 一个资源对应一个控制器，而ControllerManager就是负责管理这些控制器的。
@@ -10,7 +10,7 @@ container runtime: 负责镜像管理以及Pod和容器的真正运行（CRI）�
 kube-proxy: 负责为Service提供cluster内部的服务发现和负载均衡；它运行在每个计算节点上，负责Pod网络代理。定时从etcd获取到service信息来做相应的策略。它在Node节点上实现Pod网络代理，维护网络规则和四层负载均衡工作。
 docker或rocket(rkt): 运行容器。
 
-除了上面的几个核心组建, 还有一些常用插件(Add-ons)：
+**除了上面的几个核心组建, 还有一些常用插件**(Add-ons)：
 kube-dns: 负责为整个集群提供DNS服务;
 Ingress Controller: 为服务提供外网入口;
 Heapster: 提供资源监控;
@@ -23,7 +23,7 @@ master组件包括: kube-apiserver, kube-controller-manager, kube-scheduler;
 Node组件包括: kubelet, kube-proxy, docker或rocket(rkt);
 第三方服务：etcd
 
-Kubernetes Master控制组件，调度管理整个系统（集群），包含如下组件:
+**Kubernetes Master控制组件****，调度管理整个系统（集群），包含如下组件:**
 Kubernetes API Server: 作为Kubernetes系统入口，其封装了核心对象的增删改查操作，以RESTful API接口方式提供给外部客户和内部组件调用,维护的REST对象持久化到Etcd中存储。
 Kubernetes Scheduler: 为新建立的Pod进行节点(node)选择(即分配机器)，负责集群的资源调度。组件抽离，可以方便替换成其他调度器。
 Kubernetes Controller: 负责执行各种控制器，目前已经提供了很多控制器来保证Kubernetes的正常运行。
@@ -31,7 +31,7 @@ Replication Controller: 管理维护Replication Controller，关联Replication C
 Node Controller: 管理维护Node，定期检查Node的健康状态，标识出(失效|未失效)的Node节点。
 Namespace Controller: 管理维护Namespace，定期清理无效的Namespace，包括Namesapce下的API对象，比如Pod、Service等。
 Service Controller: 管理维护Service，提供负载以及服务代理。
-EndPoints Controller: 管理维护Endpoints，关联Service和Pod，创建Endpoints为Service的后端，当Pod发生变化时，实时更新Endpoints  (即Pod Ip + Container Port)。
+EndPoints Controller: 管理维护Endpoints，关联Service和Pod，创建Endpoints为Service的后端，当Pod发生变化时，实时更新Endpoints (即Pod Ip + Container Port)。
 Service Account Controller: 管理维护Service Account，为每个Namespace创建默认的Service Account，同时为Service Account创建Service Account Secret。
 Persistent Volume Controller: 管理维护Persistent Volume和Persistent Volume Claim，为新的Persistent Volume Claim分配Persistent Volume进行绑定，为释放的Persistent Volume执行清理回收。
 Daemon Set Controller: 管理维护Daemon Set，负责创建Daemon Pod，保证指定的Node上正常的运行Daemon Pod。
