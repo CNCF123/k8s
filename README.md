@@ -43,11 +43,11 @@ kubernetes的集群至少有两个主机组成：master + node ，即为master/n
 
 **kubernetes内部需要5套证书，手动创建或者自动生成，分别为：**
 
-**1.** etcd内部通信需要一套ca和对应证书。
-**2.** etcd与外部通信也要有一套ca和对应证书。
-**3.** APIserver间通信需要一套证书。
-**4.** apiserver与node间通信需要一套证书。
-**5.** node和pod间通信需要一套ca证书。
+ **1.**  etcd内部通信需要一套ca和对应证书。
+ **2.**  etcd与外部通信也要有一套ca和对应证书。
+ **3.**  APIserver间通信需要一套证书。
+ **4.**  apiserver与node间通信需要一套证书。
+ **5.**  node和pod间通信需要一套ca证书。
 
 目前来说还不能实现把所有的业务都迁到kubernetes上，如存储，因为这个是有状态应用，出现错误排查很麻烦，所以目前kubernetes主要是运行无状态应用。
 
