@@ -1,1 +1,1 @@
-![](/Kubernetes-arch.jpg)
+![](Kubernetes-arch.jpg)
