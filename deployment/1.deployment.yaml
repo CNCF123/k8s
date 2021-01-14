@@ -14,6 +14,16 @@ spec:
       labels:
         app: nginx
     spec:
+      affinity:
+        podAntiAffinity: #反亲和性
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app
+                operator: In
+                values:
+                - nginx
+            topologyKey: "kubernetes.io/hostname"
       hostNetwork: true
       tolerations:
       - key: "role"
