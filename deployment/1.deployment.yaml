@@ -68,18 +68,18 @@ spec:
             exec:
               command: ["/usr/sbin/nginx","-s","quit"]
         restartPolicy: [Always | Never | OnFailure]
-        volumes:
-        - name: string
-          emptyDir: {}
-          hostPath:
+      volumes:
+      - name: string
+        emptyDir: {}
+        hostPath:
+          path: string
+        secret:
+          secretName: string
+          items:
+          - keys: string
             path: string
-          secret:
-            secretName: string
-            items:
-            - keys: string
-              path: string
-          configMap:
-            name: string
-            items:
-            - key: string
-              path: string
+        configMap:
+          name: string
+          items:
+          - key: string
+            path: string
