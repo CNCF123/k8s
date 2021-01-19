@@ -1,12 +1,9 @@
 #!/bin/bash
 
-
 yum remove -y kubelet kubeadm kubectl
-
 
 K8sVersion="1.18.8"
 vK8sVersion="v1.18.8"
-
 
 setenforce  0 
 sed -i "s/^SELINUX=enforcing/SELINUX=disabled/g" /etc/sysconfig/selinux 
@@ -14,14 +11,11 @@ sed -i "s/^SELINUX=enforcing/SELINUX=disabled/g" /etc/selinux/config
 sed -i "s/^SELINUX=permissive/SELINUX=disabled/g" /etc/sysconfig/selinux 
 sed -i "s/^SELINUX=permissive/SELINUX=disabled/g" /etc/selinux/config 
 
-
 systemctl stop firewalld
 systemctl disable firewalld
 
-
 sed -i /swap/s/^/#/g  /etc/fstab
 swapoff -a 
-
 
 cat >  /etc/sysctl.d/k8s.conf <<EOF 
 net.ipv4.ip_forward = 1
@@ -52,14 +46,12 @@ EOF
 
 sysctl -p /etc/sysctl.d/k8s.conf
 
-
 echo "* soft nofile 204800" >> /etc/security/limits.conf
 echo "* hard nofile 204800" >> /etc/security/limits.conf
 echo "* soft nproc 204800"  >> /etc/security/limits.conf
 echo "* hard nproc 204800"  >> /etc/security/limits.conf
 echo "* soft  memlock  unlimited"  >> /etc/security/limits.conf
 echo "* hard memlock  unlimited"  >> /etc/security/limits.conf
-
 
 cat > /etc/sysconfig/modules/ipvs.modules <<EOF
 #!/bin/bash
@@ -72,7 +64,6 @@ EOF
 
 chmod 755 /etc/sysconfig/modules/ipvs.modules 
 bash /etc/sysconfig/modules/ipvs.modules 
-
 
 cat > /etc/modules-load.d/ipvs.conf  <<EOF
 ip_vs
@@ -89,22 +80,17 @@ ipt_REJECT
 ipip
 EOF
 
-
 systemctl enable --now systemd-modules-load.service
-
 
 lsmod | grep -e ip_vs -e nf_conntrack_ipv4
 
 yum install -y ipset ipvsadm sysstat conntrack libseccomp
-
-
 
 yum install -y yum-utils device-mapper-persistent-data lvm2
 
 yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 
 yum install -y docker-ce
-
 
 mkdir -p /etc/docker
 cat > /etc/docker/daemon.json <<EOF 
@@ -118,16 +104,13 @@ cat > /etc/docker/daemon.json <<EOF
 }
 EOF
 
-
 mkdir -p /data/docker
-
 
 systemctl daemon-reload
 systemctl enable docker
 systemctl start docker
 
 docker --version
-
 
 cat > /etc/yum.repos.d/kubernetes.repo <<EOF 
 [kubernetes]
@@ -139,15 +122,11 @@ repo_gpgcheck=0
 gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
 EOF
 
-
-
 yum install -y kubelet-${K8sVersion} kubeadm-${K8sVersion} kubectl-${K8sVersion} --setopt=obsoletes=0
 
 systemctl enable kubelet.service
 
-
 kubeadm config images list > /root/kubeadm-config-images-list
-
 
 PauseVersion=`grep 'pause' /root/kubeadm-config-images-list |awk -F: '{print $2}'`
 EtcdVersion=`grep 'etcd' /root/kubeadm-config-images-list |awk -F: '{print $2}'`
