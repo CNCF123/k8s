@@ -5,6 +5,7 @@ net.bridge.bridge-nf-call-iptables = 1
 EOF
 使设置生效
 sysctl --system 或 modprobe br_netfilter && sysctl -p /etc/sysctl.d/k8s.conf
+
 ---
 由于ipvs已经加入到了内核的主干，所以为kube-proxy开启ipvs的前提需要加载以下的内核模块：
 ip_vs
@@ -22,20 +23,24 @@ modprobe -- ip_vs_sh
 modprobe -- nf_conntrack_ipv4
 EOF
 chmod 755 /etc/sysconfig/modules/ipvs.modules && bash /etc/sysconfig/modules/ipvs.modules && lsmod | grep -e ip_vs -e nf_conntrack_ipv4
+
 ---
 在所有节点上安装ipset软件包
 yum install ipset -y
 为了方便查看ipvs规则我们要安装ipvsadm(可选)
 yum install ipvsadm -y
+
 ---
 #修改ConfigMap的kube-system/kube-proxy中的config.conf，把 mode: "" 改为mode: "ipvs" 保存退出即可
 [root@k8smaster centos]# kubectl edit cm kube-proxy -n kube-system
 configmap/kube-proxy edited
+
 ###删除之前的proxy pod
 [root@k8smaster centos]# kubectl get pod -n kube-system |grep kube-proxy |awk '{system("kubectl delete pod "$1" -n kube-system")}'
 pod "kube-proxy-2m5jh" deleted
 pod "kube-proxy-nfzfl" deleted
 pod "kube-proxy-shxdt" deleted
+
 #查看proxy运行状态
 [root@k8smaster centos]# kubectl get pod -n kube-system | grep kube-proxy
 kube-proxy-54qnw                              1/1     Running   0          24s
