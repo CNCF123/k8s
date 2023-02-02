@@ -1,5 +1,5 @@
 找到kube-system命名空间的名称为coredns的configmap：
-kubectl get configmap coredns -n kube-system                                                                     yjzeng@yjzeng-ubuntu
+kubectl get configmap coredns -n kube-system
 NAME      DATA   AGE
 coredns   1      9d
 
